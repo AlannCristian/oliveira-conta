@@ -87,3 +87,45 @@ a:focus-visible {
 .hero .botao:focus-visible {
   outline-color: #e9be63;
 }
+/* Área de serviços. */
+#servicos {
+  padding: 48px 6%;
+}
+
+#servicos h2 {
+  margin: 0 0 24px;
+  color: #173a63;
+  font-size: 28px;
+}
+
+/* Organização dos cartões. */
+.lista-servicos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Aparência de cada cartão. */
+.lista-servicos article {
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #dce4ed;
+  border-radius: 12px;
+}
+
+.lista-servicos h3 {
+  margin: 0 0 12px;
+  color: #173a63;
+  font-size: 20px;
+}
+
+.lista-servicos p {
+  margin: 0;
+}
+
+/* Em telas menores, os cartões ficam um abaixo do outro. */
+@media (max-width: 800px) {
+  .lista-servicos {
+    grid-template-columns: 1fr;
+  }
+}
