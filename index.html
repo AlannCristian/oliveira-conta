@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
 
     <title>Oliveira Conta | Contabilidade para pequenos negócios</title>
 
@@ -74,10 +75,54 @@
       <section id="contato">
         <h2>Vamos conversar sobre o seu negócio?</h2>
 
-        <p>
-          Aqui ficará nosso formulário de contato, que construiremos em uma
-          próxima etapa.
-        </p>
+        <p>Preencha os campos para demonstrar seu interesse.</p>
+
+        <form id="formulario-contato" aria-describedby="aviso-formulario">
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              autocomplete="name"
+              maxlength="100"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              maxlength="150"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="servico">Qual serviço você procura?</label>
+            <select id="servico" name="servico" required>
+              <option value="">Selecione um serviço</option>
+              <option value="abertura">Abertura de empresa</option>
+              <option value="mei">Apoio ao MEI</option>
+              <option value="contabilidade">
+                Contabilidade para pequenas empresas
+              </option>
+            </select>
+          </div>
+
+          <p id="aviso-formulario">
+            Demonstração para portfólio. Use dados fictícios. Nenhuma informação
+            será enviada ou salva nesta etapa.
+          </p>
+
+          <button type="submit" class="botao">Testar formulário</button>
+
+          <p id="resultado-formulario" role="status"></p>
+        </form>
       </section>
     </main>
 
