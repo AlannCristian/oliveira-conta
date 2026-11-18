@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from banco import salvar_contato
+from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
 
@@ -11,31 +12,48 @@ def index():
 
 @app.route("/contato", methods=["POST"])
 def contato():
-    nome = request.form.get("nome", "").strip()
-    email = request.form.get("email", "").strip()
-    servico = request.form.get("servico", "").strip()
+    dados = {
+        "nome": request.form.get("nome", "").strip(),
+        "email": request.form.get("email", "").strip(),
+        "servico": request.form.get("servico", "").strip(),
+    }
 
     servicos_permitidos = {"abertura", "mei", "contabilidade"}
+    erro = None
 
-    if not nome or not email or not servico:
+    if not all(dados.values()):
+        erro = "Preencha todos os campos."
+
+    elif len(dados["nome"]) > 100 or len(dados["email"]) > 150:
+        erro = "Nome ou e-mail ultrapassou o tamanho permitido."
+
+    elif dados["servico"] not in servicos_permitidos:
+        erro = "Selecione um serviço válido."
+
+    else:
+        try:
+            email_validado = validate_email(
+                dados["email"],
+                check_deliverability=False,
+            )
+
+            dados["email"] = email_validado.normalized
+
+        except EmailNotValidError:
+            erro = "Informe um e-mail com formato válido."
+
+    if erro:
         return render_template(
             "index.html",
-            mensagem="Preencha todos os campos.",
+            mensagem=erro,
+            dados=dados,
         ), 400
 
-    if len(nome) > 100 or len(email) > 150:
-        return render_template(
-            "index.html",
-            mensagem="Nome ou e-mail ultrapassou o tamanho permitido.",
-        ), 400
-
-    if servico not in servicos_permitidos:
-        return render_template(
-            "index.html",
-            mensagem="Selecione um serviço válido.",
-        ), 400
-        
-    salvar_contato(nome, email, servico)
+    salvar_contato(
+        dados["nome"],
+        dados["email"],
+        dados["servico"],
+    )
 
     return redirect(url_for("contato_confirmado"), code=303)
 
