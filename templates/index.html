@@ -151,7 +151,23 @@
             Testar envio ao Python
         </button>
 
-        <p id="resultado-formulario" role="status">{{ mensagem }}</p>
+        {% if mensagem %}
+    <div
+        id="resultado-formulario"
+        class="mensagem mensagem--{{ tipo_mensagem }}"
+        role="{{ 'alert' if tipo_mensagem == 'erro' else 'status' }}"
+    >
+        <strong>
+            {% if tipo_mensagem == 'erro' %}
+                Revise o preenchimento
+            {% else %}
+                Envio concluído
+            {% endif %}
+        </strong>
+
+        <p>{{ mensagem }}</p>
+    </div>
+{% endif %}
     </form>
 </section>
       </section>

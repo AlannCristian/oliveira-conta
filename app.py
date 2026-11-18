@@ -46,6 +46,7 @@ def contato():
         return render_template(
             "index.html",
             mensagem=erro,
+            tipo_mensagem="erro",
             dados=dados,
         ), 400
 
@@ -62,4 +63,5 @@ def contato_confirmado():
     return render_template(
         "index.html",
         mensagem="Contato de teste salvo com sucesso!",
+        tipo_mensagem="sucesso",
     )

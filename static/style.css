@@ -187,9 +187,35 @@ button.botao {
   font-size: 14px;
 }
 
-#resultado-formulario {
+/* Estilos compartilhados pelas mensagens. */
+.mensagem {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid;
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+.mensagem strong {
+  display: block;
+}
+
+.mensagem p {
+  margin: 8px 0 0;
+}
+
+/* Erro de preenchimento. */
+.mensagem--erro {
+  background-color: #fff1f2;
+  border-color: #b42318;
+  color: #8a1c13;
+}
+
+/* Confirmação de sucesso. */
+.mensagem--sucesso {
+  background-color: #ecfdf3;
+  border-color: #147d64;
   color: #106650;
-  font-weight: 700;
 }
 
 /* Rodapé da página. */
