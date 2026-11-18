@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from banco import salvar_contato
 from email_validator import validate_email, EmailNotValidError
+from sqlite3 import Error as SQLiteError
 
 app = Flask(__name__)
 
@@ -50,14 +51,30 @@ def contato():
             dados=dados,
         ), 400
 
-    salvar_contato(
-        dados["nome"],
-        dados["email"],
-        dados["servico"],
-    )
+    try:
+            
+        salvar_contato(
+            dados["nome"],
+            dados["email"],
+            dados["servico"],
+        )
+
+    except SQLiteError:
+        app.logger.exception("Falha ao salvar contato no SQLite.")
+
+        return render_template(
+            "index.html",
+            mensagem=(
+                "Não foi possível salvar seu contato agora. "
+                "Tente novamente em alguns instantes."
+            ),
+            tipo_mensagem="erro",
+            dados=dados,
+        ), 500
 
     return redirect(url_for("contato_confirmado"), code=303)
 
+    
 @app.route("/contato/confirmado")
 def contato_confirmado():
     return render_template(
