@@ -2,8 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for
 from banco import salvar_contato
 from email_validator import validate_email, EmailNotValidError
 from sqlite3 import Error as SQLiteError
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+from flask_wtf.csrf import CSRFProtect, CSRFError
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 app = Flask(__name__)
+
+chave_secreta = os.environ.get("SECRET_KEY")
+
+if not chave_secreta:
+    raise RuntimeError("Configure SECRET_KEY antes de iniciar a aplicação.")
+
+app.config["SECRET_KEY"] = chave_secreta
+
+csrf = CSRFProtect(app)
 
 
 @app.route("/")
@@ -82,3 +98,14 @@ def contato_confirmado():
         mensagem="Contato de teste salvo com sucesso!",
         tipo_mensagem="sucesso",
     )
+
+@app.errorhandler(CSRFError)
+def tratar_erro_csrf(erro):
+    return render_template(
+        "index.html",
+        mensagem=(
+            "Não foi possível validar este envio. "
+            "Confira os campos e tente novamente."
+        ),
+        tipo_mensagem="erro",
+    ), 400
