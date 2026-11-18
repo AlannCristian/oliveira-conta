@@ -1,4 +1,3 @@
-const formulario = document.querySelector("#formulario-contato");
 const resultado = document.querySelector("#resultado-formulario");
 
 formulario.addEventListener("submit", function (evento) {
