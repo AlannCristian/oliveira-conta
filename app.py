@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from banco import salvar_contato
 
 app = Flask(__name__)
@@ -34,8 +34,13 @@ def contato():
             "index.html",
             mensagem="Selecione um serviço válido.",
         ), 400
+        
     salvar_contato(nome, email, servico)
 
+    return redirect(url_for("contato_confirmado"), code=303)
+
+@app.route("/contato/confirmado")
+def contato_confirmado():
     return render_template(
         "index.html",
         mensagem="Contato de teste salvo com sucesso!",
