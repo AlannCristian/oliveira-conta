@@ -6,6 +6,16 @@ a MEIs e pequenas empresas.
 Projeto desenvolvido por Alann Oliveira para praticar desenvolvimento
 web e compor seu portfólio. Não oferece serviços contábeis reais.
 
+## Demonstração visual
+
+### Versão para computador
+
+![Oliveira Conta em tela de computador](docs/imagens/desktop.png)
+
+### Versão para celular
+
+![Oliveira Conta em tela de celular](docs/imagens/mobile.png)
+
 ## Funcionalidades
 
 - Apresentação dos serviços.
