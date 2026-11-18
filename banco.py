@@ -18,6 +18,16 @@ def criar_tabelas():
                 )
             """)
 
+def salvar_contato(nome, email, servico):
+    with closing(sqlite3.connect(CAMINHO_BANCO)) as conexao:
+        with conexao:
+            conexao.execute(
+                """
+                INSERT INTO contatos (nome, email, servico)
+                VALUES (?, ?, ?)
+                """,
+                (nome, email, servico),
+            )
 
 if __name__ == "__main__":
     criar_tabelas()

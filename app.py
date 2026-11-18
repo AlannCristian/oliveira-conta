@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from banco import salvar_contato
 
 app = Flask(__name__)
 
@@ -33,8 +34,9 @@ def contato():
             "index.html",
             mensagem="Selecione um serviço válido.",
         ), 400
+    salvar_contato(nome, email, servico)
 
     return render_template(
         "index.html",
-        mensagem="Dados recebidos pelo Python! Ainda não foram salvos.",
+        mensagem="Contato de teste salvo com sucesso!",
     )
